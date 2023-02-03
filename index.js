@@ -25,11 +25,11 @@ app.use( '/api/login', require('./routes/auth') );
 app.use( '/api/usuarios', require('./routes/usuarios') );
 app.use( '/api/mensajes', require('./routes/mensajes') );
 
-server.listen( process.env.PORT, ( err ) => {
+server.listen(( err ) => {
 
     if ( err ) throw new Error(err);
 
-    console.log('Servidor corriendo en puerto', process.env.PORT );
+    console.log('Servidor corriendo');
 
 });
 
