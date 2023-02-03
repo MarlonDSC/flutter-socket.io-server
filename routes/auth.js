@@ -1,26 +1,29 @@
+/*
+    path: api/login
+
+*/
 const { Router } = require('express');
 const { check } = require('express-validator');
+
 const { crearUsuario, login, renewToken } = require('../controllers/auth');
-const { validateJWT } = require('../middlewares/validar-jwt');
-const { validateFields } = require('../middlewares/validate-fields');
+const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
 router.post('/new', [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Email is required').isEmail(),
-    check('password', 'Password is required').not().isEmpty(),
-    validateFields
-], crearUsuario);
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('password','La contraseña es obligatoria').not().isEmpty(),
+    check('email','El correo es obligatorio').isEmail(),
+    validarCampos
+], crearUsuario );
 
 router.post('/', [
-    check('email', 'Email is required').isEmail(),
-    check('password', 'Password is required').not().isEmpty(),
-    validateFields
-], login);
+    check('password','La contraseña es obligatoria').not().isEmpty(),
+    check('email','El correo es obligatorio').isEmail(),
+], login );
 
-router.get(
-    '/renew', validateJWT,renewToken
-);
+
+router.get('/renew', validarJWT, renewToken );
 
 module.exports = router;
